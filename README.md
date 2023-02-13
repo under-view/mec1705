@@ -20,3 +20,6 @@ $ iasl -d *.dat > /dev/null 2>&1
 $ acpiexec *.{dat,aml}
 ```
 
+**Useful Resources**
+* [ACPI Documentation](https://acpica.org/documentation)
+* [Ubuntu ACPI Tricks and Tips](https://wiki.ubuntu.com/Kernel/Reference/ACPITricksAndTips)
