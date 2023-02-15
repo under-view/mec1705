@@ -12,5 +12,32 @@
  */
 DefinitionBlock ("mec1705.aml", "SSDT", 3, "", "MEC1705", 0x1)
 {
+  External(\_SB.PCH, DeviceObj)      // System Bus : Platform Controller Hub
+  External(\_SB.PCH.ESPI, DeviceObj) // System Bus : Platform Controller Hub : Intel's Enhanced Serial Peripheral Interface
 
+  Scope (\_SB) {
+    Scope (PCH) {
+      Scope (ESPI) {
+        Device(EC17) { // MEC1705 Embedded Controller
+          Name(_HID, EISAID("PNP0C09"))
+
+          // Define that the EC SCI is bit 0 of the GP_STS register
+          Name(_GPE, 0)
+
+          OperationRegion(ECOR, EmbeddedControl, 0, 0xFF)
+          Field(ECOR, ByteAcc, Lock, Preserve) {
+          }
+
+          // Define EC Static Resources
+          Method(_CRS, 0) {
+            local0 = ResourceTemplate() {
+              IO(Decode16, 0x60, 0x60, 0, 1)
+              IO(Decode16, 0x64, 0x64, 0, 1)
+            }
+            Return(local0)
+          }
+        }
+      }
+    }
+  }
 }
