@@ -36,5 +36,7 @@ $ cat "mec1705.aml" > "/sys/kernel/config/acpi/table/mec1705/aml"
 
 **Useful Resources**
 * [ACPI Documentation](https://acpica.org/documentation)
+* [Microchip - Intel Enhanced Serial Peripheral Interface (eSPI)](https://www.microchip.com/en-us/solutions/data-centers-and-computing/computing-solutions/technologies/espi)
+* [Microchip - Embedded Memory Interface (EMI)](https://www.microchip.com/en-us/solutions/data-centers-and-computing/computing-solutions/technologies/embedded-memory-interface#)
 * [Ubuntu ACPI Tricks and Tips](https://wiki.ubuntu.com/Kernel/Reference/ACPITricksAndTips)
 * [MEC172x System BIOS Porting Guide](https://ww1.microchip.com/downloads/en/Appnotes/AN3642-Application-Note-DS00003642A.pdf)
