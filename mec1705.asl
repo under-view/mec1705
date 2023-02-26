@@ -23,6 +23,21 @@ DefinitionBlock ("mec1705.aml", "SSDT", 5, "", "MEC1705", 0x1)
          */
         Name(_GPE, 100) // GPIO100 / nEC_SCI -> Runtime SCI
 
+        Name (_CID, Package() {      // Compatible ID (Array of ASL objects. These Objects being strings.)
+            "MEC1705",
+            "mec1705",
+        })
+
+        Name (_DSD, Package() { // Device Specific Data
+            ToUUID("daffd814-6eba-4d8c-8a91-bc9bbf4aa301"), // Not actual
+            Package()
+            {
+                // Define compatible property
+                Package () { "compatible", Package () { "microchip,mec1705-espi" } },
+            }
+        })
+
+
         /*
          * Define EC Static Resources.
          * Ports used to initialize the logical devices at POST.
