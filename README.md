@@ -10,12 +10,12 @@ $ KSRC="/lib/modules/$(uname -r)/build" make
 ```
 ```sh
 $ source openembedded-core/oe-init-build-env $(pwd)/build
-$ bitbake mec1705
+$ bitbake mec1705-espi
 ```
 ```sh
 # cd into working directory + git folder
 # May look something like bellow
-$ cd tmp/work/udoo_bolt_emmc-northstar-linux/mec1705/0.0.1-git+b9d43fbe2a6a05a29bfa13d244a8573a3ade20c3-r0/git
+$ cd tmp/work/udoo_bolt_emmc-northstar-linux/mec1705-espi/0.0.1-git+b3697dda641acf3534f7e7e38b58981464e2e6f2-r0/git
 $ ../temp/run.do_compile
 ```
 
