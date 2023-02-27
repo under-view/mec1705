@@ -9,14 +9,32 @@
 #include <linux/platform_device.h>
 #include <linux/spi/spi.h>
 
-static int mec1705_espi_probe(struct platform_device *ofdev)
+struct mec1705_espi {
+	struct device *dev;
+	void __iomem *reg_base;
+};
+
+static int mec1705_espi_probe(struct platform_device *mec1705)
 {
-    return 0;
+	struct spi_master *master;
+	struct device *dev = &mec1705->dev;
+
+	dev_info(dev, "Allocating MEC1705 eSPI master for serial communications");
+	master = devm_spi_alloc_master(dev, sizeof(struct mec1705_espi));
+	if (!master) {
+		dev_err(dev, "spi_alloc_master: Failed to allocate MEC1705 eSPI master");
+		return -ENOMEM;
+	}
+
+	dev_set_drvdata(dev, master);
+
+	return 0;
 }
 
-static int mec1705_espi_remove(struct platform_device *device)
+static int mec1705_espi_remove(struct platform_device *mec1705)
 {
-    return 0;
+	dev_warn(&mec1705->dev, "ENTER mec1705_espi_remove function driver bound to ACPI table");
+	return 0;
 }
 
 static const struct of_device_id of_mec1705_espi_match[] = {
@@ -31,7 +49,7 @@ MODULE_DEVICE_TABLE(of, of_mec1705_espi_match);
  * Compatible ID (_CID) name object
  */
 static const struct acpi_device_id mec1705_acpi_match[] = {
-    { "MEC1705", 0 },
+	{ "MEC1705", 0 },
 	{ "mec1705", 0 },
 	{ }
 };
@@ -49,13 +67,13 @@ static struct platform_driver mec1705_espi_driver = {
 		.of_match_table = of_mec1705_espi_match,
 		.acpi_match_table = mec1705_acpi_match,
 	},
-    .id_table   = mec1705_platform_devid,
-	.probe		= mec1705_espi_probe,
-	.remove		= mec1705_espi_remove,
+	.id_table   = mec1705_platform_devid,
+	.probe      = mec1705_espi_probe,
+	.remove	    = mec1705_espi_remove,
 };
 
 module_platform_driver(mec1705_espi_driver);
 
 MODULE_LICENSE("GPL");
-MODULE_AUTHOR("Underview");
+MODULE_AUTHOR("Vincent Davis (vince@underview.tech)");
 MODULE_DESCRIPTION("Microchip MEC1705 eSPI Controller Driver");
