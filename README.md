@@ -41,19 +41,25 @@ $ acpiexec *.{dat,aml}
 SSDT overlays: Run-time ConfigFS approach
 
 ```sh
+# If desire alias for loading and unloading ACPI SSDT
+$ source devutils/compile-load-alias
+
 # Mount ConfigFS
 $ mount -t configfs none /sys/kernel/config
 
 # Load ACPI ConfigFS support (if it’s a module)
 $ modprobe acpi-configfs
 
-# Allocate a new SSDT
+# Load SSDT
 $ mkdir -p /sys/kernel/config/acpi/table/mec1705
 $ cat "mec1705.aml" > "/sys/kernel/config/acpi/table/mec1705/aml"
+# OR
+$ load_mec1705_aml
 
 # Unload SSDT
-# First compile: cc devutils/unload-acpi-table.c -o devutils/unload-acpi-table
 $ ./devutils/unload-acpi-table /sys/kernel/config/acpi/table/mec1705
+# OR
+$ unload_mec1705_aml
 ```
 
 **Useful Resources**
