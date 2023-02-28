@@ -56,3 +56,4 @@ dkms.conf
 *.dtb
 *.aml
 .mec1705*
+devutils/unload-acpi-table
