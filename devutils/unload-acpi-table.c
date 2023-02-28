@@ -1,3 +1,6 @@
+/*
+ * cc devutils/unload-acpi-table.c -o devutils/unload-acpi-table
+ */
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
