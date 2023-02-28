@@ -50,6 +50,10 @@ $ modprobe acpi-configfs
 # Allocate a new SSDT
 $ mkdir -p /sys/kernel/config/acpi/table/mec1705
 $ cat "mec1705.aml" > "/sys/kernel/config/acpi/table/mec1705/aml"
+
+# Unload SSDT
+# First compile: cc devutils/unload-acpi-table.c -o devutils/unload-acpi-table
+$ ./devutils/unload-acpi-table /sys/kernel/config/acpi/table/mec1705
 ```
 
 **Useful Resources**
