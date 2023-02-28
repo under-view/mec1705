@@ -1,4 +1,5 @@
 MODULE_NAME = mec1705
+PWD = $(shell pwd)
 
 ASL ?= iasl
 ASL_FLAGS ?=
