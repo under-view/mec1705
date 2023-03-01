@@ -1,25 +1,37 @@
 // SPDX-License-Identifier: GPL-2.0
 
 /*
- * MEC170X eSPI Controller Driver
+ * MEC1705 eSPI Controller Driver
  */
 #include <linux/module.h>
 #include <linux/of.h>
 #include <linux/of_platform.h>
+#include <linux/of_address.h>
 #include <linux/platform_device.h>
 #include <linux/spi/spi.h>
 
+/*
+ * struct mec1705_espi (MEC1705 Intel Enhanced Serial Peripheral Interface)
+ *
+ * @dev  - Pointer to MEC1705 (struct device info)
+ * @regs -
+ */
 struct mec1705_espi {
 	struct device *dev;
-	void __iomem *reg_base;
+	void __iomem *regs;
 };
 
 static int mec1705_espi_probe(struct platform_device *mec1705)
 {
 	struct spi_master *master;
+	//struct mec1705_espi *mec1705_espi;
 	struct device *dev = &mec1705->dev;
 
-	dev_info(dev, "Allocating MEC1705 eSPI master for serial communications");
+	const char *compatible_propery;
+	device_property_read_string(dev, "compatible", &compatible_propery);
+	dev_warn(dev, "compatible: %s", compatible_propery);
+
+	dev_warn(dev, "Allocating MEC1705 eSPI master for serial communications");
 	master = devm_spi_alloc_master(dev, sizeof(struct mec1705_espi));
 	if (!master) {
 		dev_err(dev, "spi_alloc_master: Failed to allocate MEC1705 eSPI master");
