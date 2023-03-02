@@ -56,20 +56,8 @@ static const struct of_device_id of_mec1705_espi_match[] = {
 
 MODULE_DEVICE_TABLE(of, of_mec1705_espi_match);
 
-/*
- * Make compatible with mec1705 ACPI SSDT via the
- * Compatible ID (_CID) name object
- */
-static const struct acpi_device_id mec1705_acpi_match[] = {
-	{ "MEC1705", 0 },
-	{ "mec1705", 0 },
-	{ }
-};
-
-MODULE_DEVICE_TABLE(acpi, mec1705_acpi_match);
-
 static const struct platform_device_id mec1705_platform_devid[] = {
-	{ "mec1705", 0 },
+	{ "mec1705-espi", 0 },
 	{ }
 };
 
@@ -77,7 +65,6 @@ static struct platform_driver mec1705_espi_driver = {
 	.driver = {
 		.name = "mec1705_espi",
 		.of_match_table = of_mec1705_espi_match,
-		.acpi_match_table = mec1705_acpi_match,
 	},
 	.id_table   = mec1705_platform_devid,
 	.probe      = mec1705_espi_probe,
