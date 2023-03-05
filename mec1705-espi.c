@@ -8,37 +8,33 @@
 #include <linux/of_platform.h>
 #include <linux/of_address.h>
 #include <linux/platform_device.h>
-#include <linux/spi/spi.h>
+#include <linux/ioport.h>
 
 /*
  * struct mec1705_espi (MEC1705 Intel Enhanced Serial Peripheral Interface)
  *
- * @dev  - Pointer to MEC1705 (struct device info)
- * @regs -
+ * @regs - Store base virtual address for MEC1705 eSPI interface
  */
 struct mec1705_espi {
-	struct device *dev;
 	void __iomem *regs;
 };
 
 static int mec1705_espi_probe(struct platform_device *mec1705)
 {
 	struct spi_master *master;
-	//struct mec1705_espi *mec1705_espi;
+	struct mec1705_espi *mec1705_espi;
 	struct device *dev = &mec1705->dev;
 
 	const char *compatible_propery;
 	device_property_read_string(dev, "compatible", &compatible_propery);
 	dev_warn(dev, "compatible: %s", compatible_propery);
 
-	dev_warn(dev, "Allocating MEC1705 eSPI master for serial communications");
-	master = devm_spi_alloc_master(dev, sizeof(struct mec1705_espi));
-	if (!master) {
-		dev_err(dev, "spi_alloc_master: Failed to allocate MEC1705 eSPI master");
+	/* Per device structure allocation */
+	mec1705_espi = devm_kzalloc(dev, sizeof(*mec1705_espi), GFP_KERNEL);
+	if (!mec1705_espi)
 		return -ENOMEM;
-	}
 
-	dev_set_drvdata(dev, master);
+	dev_set_drvdata(dev, mec1705_espi);
 
 	return 0;
 }
