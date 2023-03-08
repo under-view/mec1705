@@ -21,7 +21,6 @@ struct mec1705_espi {
 
 static int mec1705_espi_probe(struct platform_device *mec1705)
 {
-	struct spi_master *master;
 	struct mec1705_espi *mec1705_espi;
 	struct device *dev = &mec1705->dev;
 
