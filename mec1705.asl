@@ -30,6 +30,10 @@ DefinitionBlock ("mec1705.aml", "SSDT", 5, "", "MEC1705", 0x1)
 		 */
 		Name(_GPE, 100) // GPIO100 / nEC_SCI -> Runtime SCI
 
+		Method (_STA) { // _STA: Device status | DT: status = okay
+			Return (0xF)
+		}
+
 		Name (_DSD, Package() { // Device Specific Data - used to return MEC1705 static resources (Defined in _CRS) to the device driver.
 			/*
 			 * Known as the Device Properties UUID
