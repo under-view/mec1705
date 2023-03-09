@@ -33,6 +33,11 @@ static int mec1705_espi_probe(struct platform_device *mec1705)
 	if (!mec1705_espi)
 		return -ENOMEM;
 
+	/* Get a virtual address for the device registers */
+	mec1705_espi->regs = devm_platform_ioremap_resource(mec1705, 0);
+	if (IS_ERR(mec1705_espi->regs))
+		return PTR_ERR(mec1705_espi->regs);
+
 	dev_set_drvdata(dev, mec1705_espi);
 
 	return 0;
