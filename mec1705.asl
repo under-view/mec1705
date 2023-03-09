@@ -50,45 +50,17 @@ DefinitionBlock ("mec1705.aml", "SSDT", 5, "", "MEC1705", 0x1)
 		 * Ports/Registers used to communicate System Host with EC.
 		 */
 		Name(_CRS, ResourceTemplate() { // _CRS: Current Resource settings
-			/*
-			 * data port - Allows bi-directional data transfers to and from the host
-			 *             and embedded controller.
-			 * IO(Decode16, Range Minimum, Range Maximum, Alignment 1, Length 1)
-			 */
-			IO(Decode16, 0x60, 0x60, 0x01, 0x01)
+			// eSPI Interface IO Component Registers
+			Memory32Fixed (ReadWrite,
+					   	   0x400F3400,  // Base Address Register
+					   	   0x0000004C,  // Address Length (76 bytes)
+					   	   EIOC)
 
-			/*
-			 * status/command port - returns port status information upon a read, and generates
-			 *                       a command sequence to the embedded controller upon a write.
-			 * IO(Decode16, Range Minimum, Range Maximum, Alignment 1, Length 1)
-			 */
-			IO(Decode16, 0x64, 0x64, 0x01, 0x01)
-
-			// eSPI Interface IO Component Registers (BAR: 0x400F3400)
-			/*
-			OperationRegion(EIOC, EmbeddedControl, 0x400F3434, 0x13)
-			Field(EIOC, ByteAcc, Lock, Preserve) {
-				EIOP, 4, // eSPI I/O Component (Configuration Port)
-				MCOM, 4, // eSPI Memory Component
-				MBOX, 4, // Mailbox
-				EKBC, 4, // 8042 Emulated Keyboard Controller
-				AEC0, 4, // ACPI EC Channel 0
-				AEC1, 4, // ACPI EC Channel 1
-				AEC2, 4, // ACPI EC Channel 2
-				AEC3, 4, // ACPI EC Channel 3
-				AEC4, 4, // ACPI EC Channel 4
-				APM1, 4, // ACPI PM1
-				LKYB, 4, // Legacy (Fast Keyboard)
-				URT0, 4, // UART 0
-				URT1, 4, // UART 1
-				EMI0, 4, // Embedded Memory Interface (EMI) 0
-				EMI1, 4, // Embedded Memory Interface (EMI) 1
-				EMI2, 4, // Embedded Memory Interface (EMI) 2
-				BDP0, 4, // BIOS Debug Port (Port 80) 0
-				BDP1, 4, // BIOS Debug Port (Port 80) 1
-				RTCT, 4, // RTC
-			}
-			*/
+			// eSPI Interface Memory Component Registers
+			Memory32Fixed (ReadWrite,
+						   0x400F3800,  // Base Address Register
+						   0x0000005A,  // Address Length (90 bytes)
+						   EIMC)
 		})
 	}
 }
